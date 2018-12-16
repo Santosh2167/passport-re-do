@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const expressSession = require("express-session");
 const MongoStore = require("connect-mongo")(expressSession);
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 const app = express();
 
@@ -12,6 +13,10 @@ app.set("view engine", "handlebars");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+require("./config/passport");
+app.use(passport.initialize);
+app.use(passport.session());
 
 app.use(expressSession({
     secret: process.env.SESSION_SECRET,
